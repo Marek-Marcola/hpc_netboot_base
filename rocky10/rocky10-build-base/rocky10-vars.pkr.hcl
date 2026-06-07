@@ -1,0 +1,1 @@
+../rocky10-vars.pkr.hcl
