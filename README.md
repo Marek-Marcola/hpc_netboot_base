@@ -1,4 +1,4 @@
 netboot base
 ============
 
-Netboot base images.
+HPC netboot base images.
