@@ -44,7 +44,7 @@ build {
   provisioner "ansible" {
     user             = "${var.os_user}"
     extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b"]
-    playbook_file    = "${var.os_anpb}/playbooks/999230-pdev/pdev_postinstall_image.yml"
+    playbook_file    = "${var.os_anpb}/playbooks/999202-bdev/bdev_postinstall_image.yml"
   }
 
   provisioner "shell-local" {
