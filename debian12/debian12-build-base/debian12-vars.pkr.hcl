@@ -1,0 +1,1 @@
+../debian12-vars.pkr.hcl
