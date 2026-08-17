@@ -7,7 +7,7 @@ build {
     execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
     inline = [
       "set -x",
-      "mkdir -p /version.d",
+      "mkdir -pv /version.d",
       "F=/version.d/version-${var.os_dist}-${var.os_ver}-${var.os_id}.txt",
       "echo info.date = $(date +%Y-%m-%d_%H:%M:%S) > $F",
       "echo info.name = ${var.os_dist}-${var.os_ver}-${var.os_id} >> $F",
