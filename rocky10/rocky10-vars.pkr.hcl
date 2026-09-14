@@ -58,6 +58,10 @@ variable "os_date" {
   type = string
 }
 
+variable "os_wait" {
+  type = string
+}
+
 variable "vg_burl" {
   type = string
 }
