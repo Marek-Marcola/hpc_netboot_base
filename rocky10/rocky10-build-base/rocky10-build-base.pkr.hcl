@@ -7,11 +7,19 @@ build {
     execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
     inline = [
       "set -x",
-      "mkdir -p /version.d",
+      "mkdir -pv /version.d",
       "F=/version.d/version-${var.os_dist}-${var.os_ver}-${var.os_id}.txt",
-      "echo info.date = $(date +%Y-%m-%d_%H:%M:%S) > $F",
+      "echo info.date = $(date +%y-%m-%d_%H:%M:%S) > $F",
       "echo info.name = ${var.os_dist}-${var.os_ver}-${var.os_id} >> $F",
       "echo info.from = ${var.os_dist}-${var.os_ver}-${var.os_from} >> $F"
+    ]
+  }
+  provisioner "shell" {
+    execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
+    inline = [
+      "set -x",
+      "echo Waiting ${var.os_wait} for diag ...",
+      "sleep ${var.os_wait}"
     ]
   }
 
@@ -22,12 +30,30 @@ build {
       "rpm --import /etc/pki/rpm-gpg/*",
       "yum-config-manager --disable '*' > /dev/null",
       "F=/etc/yum.repos.d/rocky-${var.os_ver}.repo",
-      "cat <<'EOF' >> $F\n[baseos-${var.os_ver}-dvd1]\nname=baseos-${var.os_ver}-dvd1\nbaseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/BaseOS\nEOF",
-      "cat <<'EOF' >> $F\n[appstream-${var.os_ver}-dvd1]\nname=appstream-${var.os_ver}-dvd1\nbaseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/AppStream\nEOF",
-      "cat <<'EOF' >> $F\n[baseos-${var.os_ver}-os]\nname=baseos-${var.os_ver}-os\nbaseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/BaseOS\nEOF",
-      "cat <<'EOF' >> $F\n[appstream-${var.os_ver}-os]\nname=appstream-${var.os_ver}-os\nbaseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/AppStream\nEOF",
-      "cat <<'EOF' >> $F\n[highavailability-${var.os_ver}-os]\nname=highavailability-${var.os_ver}-os\nbaseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/HighAvailability\nEOF",
-      "cat <<'EOF' >> $F\n[crb-${var.os_ver}-os]\nname=crb-${var.os_ver}-os\nbaseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/CRB\nEOF",
+      "echo -n > $F",
+      "echo [baseos-${var.os_ver}-dvd1] >> $F",
+      "echo name=baseos-${var.os_ver}-dvd1 >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/BaseOS >> $F",
+      "echo >> $F",
+      "echo [appstream-${var.os_ver}-dvd1] >> $F",
+      "echo name=appstream-${var.os_ver}-dvd1 >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/AppStream >> $F",
+      "echo >> $F",
+      "echo [baseos-${var.os_ver}-os] >> $F",
+      "echo name=baseos-${var.os_ver}-os >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/BaseOS >> $F",
+      "echo >> $F",
+      "echo [appstream-${var.os_ver}-os] >> $F",
+      "echo name=appstream-${var.os_ver}-os >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/AppStream >> $F",
+      "echo >> $F",
+      "echo [highavailability-${var.os_ver}-os] >> $F",
+      "echo name=highavailability-${var.os_ver}-os >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/HighAvailability >> $F",
+      "echo >> $F",
+      "echo [crb-${var.os_ver}-os] >> $F",
+      "echo name=crb-${var.os_ver}-os >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/CRB >> $F",
       "yum -q clean all"
     ]
   }
