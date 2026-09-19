@@ -7,11 +7,19 @@ build {
     execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
     inline = [
       "set -x",
-      "mkdir -p /version.d",
+      "mkdir -pv /version.d",
       "F=/version.d/version-${var.os_dist}-${var.os_ver}-${var.os_id}.txt",
-      "echo info.date = $(date +%Y-%m-%d_%H:%M:%S) > $F",
+      "echo info.date = $(date +%y-%m-%d_%H:%M:%S) > $F",
       "echo info.name = ${var.os_dist}-${var.os_ver}-${var.os_id} >> $F",
       "echo info.from = ${var.os_dist}-${var.os_ver}-${var.os_from} >> $F"
+    ]
+  }
+  provisioner "shell" {
+    execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
+    inline = [
+      "set -x",
+      "echo Waiting ${var.os_wait} for diag ...",
+      "sleep ${var.os_wait}"
     ]
   }
 
@@ -23,13 +31,20 @@ build {
       "rpm --import /etc/pki/rpm-gpg/*",
       "yum-config-manager --disable '*' > /dev/null",
       "F=/etc/yum.repos.d/centos-${var.os_ver}.repo",
-      "cat <<'EOF' >> $F\n[everything-${var.os_ver}]\nname=everything-${var.os_ver}\nbaseurl=http://${var.os_web}/sw/linux/centos/${var.os_ver}/x86_64/install-dvd2\nEOF",
-      "cat <<'EOF' >> $F\n[updates-${var.os_ver}]\nname=updates-${var.os_ver}\nbaseurl=http://${var.os_web}/sw/linux/centos/${var.os_ver}/x86_64/updates\nEOF",
+      "echo -n > $F",
+      "echo [everything-${var.os_ver}] >> $F",
+      "echo name=everything-${var.os_ver} >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/centos/${var.os_ver}/x86_64/install-dvd2 >> $F",
+      "echo >> $F",
+      "echo [updates-${var.os_ver}] >> $F",
+      "echo name=updates-${var.os_ver} >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/centos/${var.os_ver}/x86_64/updates >> $F",
       "yum -q clean all"
     ]
   }
 
   provisioner "ansible" {
+    command          = "/usr/local/ansible-9/bin/ansible-playbook"
     user             = "${var.os_user}"
     extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b"]
     playbook_file    = "${var.os_anpb}/playbooks/999202-bdev/bdev_postinstall_image.yml"
