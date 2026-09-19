@@ -34,7 +34,7 @@ build {
       "echo -n > $F",
       "echo [everything-${var.os_ver}] >> $F",
       "echo name=everything-${var.os_ver} >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/centos/${var.os_ver}/x86_64/install-dvd2 >> $F",
+      "echo baseurl=http://${var.os_web}/sw/linux/centos/${var.os_ver}/x86_64/dvd2 >> $F",
       "echo >> $F",
       "echo [updates-${var.os_ver}] >> $F",
       "echo name=updates-${var.os_ver} >> $F",
