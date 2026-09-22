@@ -14,6 +14,14 @@ build {
       "echo info.from = ${var.os_dist}-${var.os_ver}-${var.os_from} >> $F"
     ]
   }
+  provisioner "shell" {
+    execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
+    inline = [
+      "set -x",
+      "echo Diag wait for ${var.os_wait} ...",
+      "sleep ${var.os_wait}"
+    ]
+  }
 
   provisioner "shell" {
     execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
@@ -25,27 +33,27 @@ build {
       "echo -n > $F",
       "echo [baseos-${var.os_ver}-dvd1] >> $F",
       "echo name=baseos-${var.os_ver}-dvd1 >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/BaseOS >> $F",
+      "echo baseurl=${var.os_durl}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/BaseOS >> $F",
       "echo >> $F",
       "echo [appstream-${var.os_ver}-dvd1] >> $F",
       "echo name=appstream-${var.os_ver}-dvd1 >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/AppStream >> $F",
+      "echo baseurl=${var.os_durl}/sw/linux/rocky/${var.os_ver}/x86_64/dvd1/AppStream >> $F",
       "echo >> $F",
       "echo [baseos-${var.os_ver}-os] >> $F",
       "echo name=baseos-${var.os_ver}-os >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/BaseOS >> $F",
+      "echo baseurl=${var.os_durl}/sw/linux/rocky/${var.os_ver}/x86_64/os/BaseOS >> $F",
       "echo >> $F",
       "echo [appstream-${var.os_ver}-os] >> $F",
       "echo name=appstream-${var.os_ver}-os >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/AppStream >> $F",
+      "echo baseurl=${var.os_durl}/sw/linux/rocky/${var.os_ver}/x86_64/os/AppStream >> $F",
       "echo >> $F",
       "echo [highavailability-${var.os_ver}-os] >> $F",
       "echo name=highavailability-${var.os_ver}-os >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/HighAvailability >> $F",
+      "echo baseurl=${var.os_durl}/sw/linux/rocky/${var.os_ver}/x86_64/os/HighAvailability >> $F",
       "echo >> $F",
       "echo [crb-${var.os_ver}-os] >> $F",
       "echo name=crb-${var.os_ver}-os >> $F",
-      "echo baseurl=http://${var.os_web}/sw/linux/rocky/${var.os_ver}/x86_64/os/CRB >> $F",
+      "echo baseurl=${var.os_durl}/sw/linux/rocky/${var.os_ver}/x86_64/os/CRB >> $F",
       "yum -q clean all"
     ]
   }
