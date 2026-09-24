@@ -14,14 +14,6 @@ build {
       "echo info.from = ${var.os_dist}-${var.os_ver}-${var.os_from} >> $F"
     ]
   }
-  provisioner "shell" {
-    execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
-    inline = [
-      "set -x",
-      "echo Waiting ${var.os_wait} for diag ...",
-      "sleep ${var.os_wait}"
-    ]
-  }
 
   provisioner "ansible" {
     user             = "${var.os_user}"
