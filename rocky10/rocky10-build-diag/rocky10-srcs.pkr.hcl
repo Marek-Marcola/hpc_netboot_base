@@ -1,0 +1,1 @@
+../rocky10-srcs.pkr.hcl
