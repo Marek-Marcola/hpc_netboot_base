@@ -18,7 +18,7 @@ build {
     execute_command = "echo '${var.os_pass}'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
     inline = [
       "set -x",
-      "echo Waiting ${var.os_wait} for diag ...",
+      "echo Diag wait for ${var.os_wait} ...",
       "sleep ${var.os_wait}"
     ]
   }
