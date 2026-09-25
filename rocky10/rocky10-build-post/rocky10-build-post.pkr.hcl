@@ -75,7 +75,7 @@ build {
 
   provisioner "ansible" {
     user             = "${var.os_user}"
-    extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b","-e","f=epel-10 n=epel-10 b=http://yum.dc.local/sw/linux/rocky/epel/10"]
+    extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b","-e","f=epel-10 n=epel-10 C=0 b=http://yum.dc.local/sw/linux/rocky/epel/10"]
     playbook_file    = "${var.os_anpb}/playbooks/001500-linux_admin/yum_repo_add.yml"
   }
 
