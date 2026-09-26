@@ -26,6 +26,14 @@ variable "os_web" {
   type = string
 }
 
+variable "os_durl" {
+  type = string
+}
+
+variable "os_dopt" {
+  type = string
+}
+
 variable "os_out" {
   type = string
 }
@@ -55,6 +63,10 @@ variable "os_pass" {
 }
 
 variable "os_date" {
+  type = string
+}
+
+variable "os_wait" {
   type = string
 }
 
