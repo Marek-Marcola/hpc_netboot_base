@@ -1,4 +1,4 @@
 netboot base
 ============
 
-HPC netboot base images.
+High-performance computing (HPC) netboot base images.
