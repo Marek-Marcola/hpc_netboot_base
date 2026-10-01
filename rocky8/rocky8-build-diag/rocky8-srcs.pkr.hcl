@@ -1,0 +1,1 @@
+../rocky8-srcs.pkr.hcl
