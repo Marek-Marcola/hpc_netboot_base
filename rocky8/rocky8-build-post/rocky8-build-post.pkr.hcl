@@ -63,6 +63,14 @@ build {
     extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b"]
     playbook_file    = "${var.os_anpb}/playbooks/101058-gpg/gpg_postinstall.yml"
   }
+
+  provisioner "ansible" {
+    command          = "/usr/local/ansible-9/bin/ansible-playbook"
+    user             = "${var.os_user}"
+    extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b","-e","f=epel-8 n=epel-8 b=${var.os_durl}/sw/linux/rocky/epel/8"]
+    playbook_file    = "${var.os_anpb}/playbooks/001500-linux_admin/yum_repo_add.yml"
+  }
+
   provisioner "ansible" {
     command          = "/usr/local/ansible-9/bin/ansible-playbook"
     user             = "${var.os_user}"
