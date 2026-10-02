@@ -9,7 +9,7 @@ build {
       "set -x",
       "mkdir -pv /version.d",
       "VF=/version.d/version-${var.os_dist}-${var.os_ver}-${var.os_id}.txt",
-      "echo info.date = $(date +%y-%m-%d_%H:%M:%S) >> $VF",
+      "echo info.date = $(date +%y-%m-%d_%H:%M) >> $VF",
       "echo info.name = ${var.os_dist}-${var.os_ver}-${var.os_id} >> $VF",
       "echo info.from = ${var.os_dist}-${var.os_ver}-${var.os_from} >> $VF"
     ]
