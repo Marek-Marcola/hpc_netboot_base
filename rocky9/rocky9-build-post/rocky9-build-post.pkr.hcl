@@ -9,7 +9,7 @@ build {
       "set -x",
       "mkdir -pv /version.d",
       "F=/version.d/version-${var.os_dist}-${var.os_ver}-${var.os_id}.txt",
-      "echo info.date = $(date +%y-%m-%d_%H:%M:%S) > $F",
+      "echo info.date = $(date +%y-%m-%d_%H:%M) > $F",
       "echo info.name = ${var.os_dist}-${var.os_ver}-${var.os_id} >> $F",
       "echo info.from = ${var.os_dist}-${var.os_ver}-${var.os_from} >> $F"
     ]
@@ -75,7 +75,7 @@ build {
 
   provisioner "ansible" {
     user             = "${var.os_user}"
-    extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b","-e","f=epel-9 n=epel-9 b=http://yum.dc.local/sw/linux/rocky/epel/9"]
+    extra_arguments  = ["-e","h=default","-e","ansible_ssh_pass=${var.os_pass}","-b","-e","f=epel-9 n=epel-9 b=${var.os_durl}/sw/linux/rocky/epel/9"]
     playbook_file    = "${var.os_anpb}/playbooks/001500-linux_admin/yum_repo_add.yml"
   }
 
