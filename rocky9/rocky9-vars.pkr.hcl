@@ -22,10 +22,6 @@ variable "os_tag" {
   type = string
 }
 
-variable "os_web" {
-  type = string
-}
-
 variable "os_durl" {
   type = string
 }
