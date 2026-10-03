@@ -22,7 +22,11 @@ variable "os_tag" {
   type = string
 }
 
-variable "os_web" {
+variable "os_durl" {
+  type = string
+}
+
+variable "os_dopt" {
   type = string
 }
 
